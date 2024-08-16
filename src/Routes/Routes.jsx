@@ -7,6 +7,7 @@ import Home from "../Pages/Home/Home";
 import Login from "../Pages/Login/Login";
 import Register from "../Pages/Register/Register";
 import ProductCard from "../ProductCard/ProductCard";
+import PrivateRoute from "../PrivateRoute/PrivateRoute";
 
 
   export const router = createBrowserRouter([
@@ -16,7 +17,7 @@ import ProductCard from "../ProductCard/ProductCard";
       children: [
         {
             path: "/",
-            element: <Home></Home>
+            element: <PrivateRoute><Home></Home></PrivateRoute>
         },
         {
           path: "/login",
