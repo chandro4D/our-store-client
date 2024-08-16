@@ -1,16 +1,13 @@
-// import { useContext, useState } from "react";
-// import { Helmet } from "react-helmet-async";
-// import { FaEye, FaEyeSlash } from "react-icons/fa";
-// import { FcGoogle } from "react-icons/fc";
-// import { Link, useLocation, useNavigate } from "react-router-dom";
-// import Swal from "sweetalert2";
-// import { AuthContext } from "../../Provider/AuthProvider";
+
+import { Helmet } from "react-helmet-async";
 // import useAxiosPublic from "../../Hook/useAxiosPublic";
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import { AuthContext } from "../../Provider/AuthProvider";
 
 
 const Register = () => {
@@ -21,138 +18,106 @@ const Register = () => {
     const [registerError, setRegisterError] = useState("");
     const [success, setSuccess] = useState('');
 
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
-    // const location = useLocation();
-    // console.log(location);
+    const location = useLocation();
+    console.log(location);
 
     // const from = location.state?.from?.pathname || "/";
 
-    // const { createUser, googleLogin, setUser, updateUserProfile } = useContext(AuthContext);
+    const { createUser, googleLogin  } = useContext(AuthContext);
 
-    // const [selectedRole, setSelectedRole] = useState('user');
+    const handleRegister = e => {
+        e.preventDefault();
+        const email = e.target.email.value;
+        const password = e.target.password.value;
+        const name = e.target.name.value;
+        console.log(email, password, name);
 
-    // const handleRoleChange = (event) => {
-    //     setSelectedRole(event.target.value);
-    // };
+        if (password.length < 6) {
+            setRegisterError('Password should be at least 6 characters');
+            Swal.fire({
+                icon: "error",
+                text: "Password should be at least 6 characters!",
 
-    // const handleRegister = e => {
-    //     e.preventDefault();
-    //     const email = e.target.email.value;
-    //     const password = e.target.password.value;
-    //     const name = e.target.name.value;
-    //     const PhotoURL = e.target.PhotoURL.value;
-    //     const role = `${selectedRole}`
+            });
+            return;
+        }
+        else if (!/[A-Z]/.test(password)) {
+            setRegisterError('Your password should have at least one upper case letter');
 
-    //     console.log(email, password, name, PhotoURL, role);
+            Swal.fire({
+                icon: "error",
+                text: "Your password should have at least one upper case letter!",
 
-    //     if (password.length < 6) {
-    //         setRegisterError('Password should be at least 6 characters');
-    //         Swal.fire({
-    //             icon: "error",
-    //             text: "Password should be at least 6 characters!",
+            });
+            return;
+        }
+        else if (!/[a-z]/.test(password)) {
+            setRegisterError('Your password should have at least one lower case letter');
+            Swal.fire({
+                icon: "error",
+                text: "Your password should have at least one lower case letter!",
 
-    //         });
-    //         return;
-    //     }
-    //     else if (!/[A-Z]/.test(password)) {
-    //         setRegisterError('Your password should have at least one upper case letter');
+            });
+            return;
+        }
+        setRegisterError('');
+        setSuccess('');
 
-    //         Swal.fire({
-    //             icon: "error",
-    //             text: "Your password should have at least one upper case letter!",
+        createUser(email, password, name)
+            .then(result => {
 
-    //         });
-    //         return;
-    //     }
-    //     else if (!/[a-z]/.test(password)) {
-    //         setRegisterError('Your password should have at least one lower case letter');
-    //         Swal.fire({
-    //             icon: "error",
-    //             text: "Your password should have at least one lower case letter!",
-
-    //         });
-    //         return;
-    //     }
-    //     setRegisterError('');
-    //     setSuccess('');
-    //     createUser(email, password, name, PhotoURL)
-    //         .then(result => {
-
-    //             console.log(result.user);
-    //             setUser(result.user);
-    //             setSuccess("Account Created successfully");
-    //             // create user entry--------------
-    //             const userInfo = {
-    //                 email,
-    //                 name,
-    //                 PhotoURL,
-    //                 role
-
-    //             }
-    //             axiosPublic.post('/users', userInfo)
-    //                 .then(res => {
-    //                     if (res.data.insertedId) {
-    //                         Swal.fire({
-    //                             icon: "success",
-    //                             text: "Account Created  successfully!",
-
-    //                         });
-    //                     }
-    //                 })
-
-
-    //             updateUserProfile(name, PhotoURL)
-    //             // .then()
-    //             navigate("/");
-    //         })
-    //         .catch(error => {
-    //             console.log(error);
-    //             setRegisterError(error.message);
-    //         })
-    // }
+                console.log(result.user);
+                
+                setSuccess("Account Created successfully");
+                Swal.fire({
+                    icon: "success",
+                    text: "Account Created successfully!",
+                    
+                  });
+                
+                
+                // .then()
+                navigate("/");
+            })
+            .catch(error => {
+                console.log(error);
+                setRegisterError(error.message);
+            })
+    }
     //--------- Google Login-----------
-    // const role = "user";
-    // const handleGoogleLogin = e => {
-    //     e.preventDefault();
-    //     googleLogin()
-    //         .then(result => {
-    //             console.log(result.user)
-    //             const userInfo = {
-    //                 email: result.user?.email,
-    //                 name: result.user?.displayName,
-    //                 role
-    //             }
-    //             axiosPublic.post('/users', userInfo)
-    //                 .then(res => {
-    //                     console.log(res.data);
-    //                 })
-    //             Swal.fire({
-    //                 icon: "success",
-    //                 text: "LogIn successfully!",
-
-    //             });
-    //             navigate(from, { replace: true });
-    //         })
-    //         .catch(error => {
-    //             console.log(error.message);
-    //             alert(error.message)
-    //         })
+    const handleGoogleLogin = e => {
+        e.preventDefault();
+        googleLogin()
+        .then(result =>{
+            console.log(result.user)
+            Swal.fire({
+                icon: "success",
+                text: "LogIn successfully!",
+                
+              });
+            navigate(location?.state ? location.state : '/');
+        })
+        .catch(error =>{
+            console.log(error.message);
+            alert(error.message)
+        })
 
 
-    // }
+    }
 
     return (
         <div className="pt-10">
             <div className="lg:w-[500px] lg:h-[600px] sm:w-[400px] sm:h-[550px] bg-gray-600 lg:ml-[500px] sm:ml-0  mb-10 rounded-xl">
-                {/* <Helmet>
-                    <title>HealthHaven | Register</title>
-                </Helmet> */}
+                <Helmet>
+                    <title>OurStore | Register</title>
+                </Helmet>
                 <div className=" pt-10">
                     <h2 className="text-center text-2xl font-bold text-white mb-2">WELCOME TO HEALTH HAVEN</h2>
                     <p className="text-center text-xl font-semibold text-black">Register to your account </p>
                 </div>
-                <form onSubmit className="pt-8 lg:pl-12 sm:pl-0">
+                <form onSubmit={handleRegister} className="pt-8 lg:pl-12 sm:pl-0">
                     <div className=" lg:w-[400px] sm:w-[250px] h-[50px]">
                         <input className="w-full h-full rounded-lg text-center" type="name" placeholder="Your Name" required name="name" />
                     </div>
@@ -175,24 +140,6 @@ const Register = () => {
                         </div>
                     </div>
                     
-                   
-
-                    
-                    {/* <div>
-                        <label className="form-control  lg:w-[400px] sm:w-[250px] h-[50px]">
-                           
-                           <select 
-                           
-                           className="select select-bordered">
-                               
-                               <option className="text-center  text-xl">user</option>
-                               <option className="text-center  text-xl">seller</option>
-                               
-                           </select>
-                           
-                       </label>
-                        
-                    </div> */}
 
 
                     <br />
@@ -209,7 +156,7 @@ const Register = () => {
                 <br />
                 <div className="flex  ml-[240px]   ">
                     <div  >
-                        <button onClick className=" mr-8    text-center pt-1 "><FcGoogle className="w-10 h-10"></FcGoogle></button>
+                        <button onClick={handleGoogleLogin} className=" mr-8    text-center pt-1 "><FcGoogle className="w-10 h-10"></FcGoogle></button>
                     </div>
 
                 </div>

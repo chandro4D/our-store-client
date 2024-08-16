@@ -1,92 +1,81 @@
-// import { useContext } from "react";
-// import { Helmet } from "react-helmet-async";
-// import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
-// import { Link, useLocation, useNavigate } from "react-router-dom";
-// import { AuthContext } from "../../Provider/AuthProvider";
-// import Swal from "sweetalert2";
-// import useAxiosPublic from "../../Hook/useAxiosPublic";
+
+import { Helmet } from "react-helmet-async";
+import { FcGoogle } from "react-icons/fc";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../Provider/AuthProvider";
+import { useContext } from "react";
+import Swal from "sweetalert2";
 
 const Login = () => {
-    // const { signIn, googleLogin } = useContext(AuthContext);
+    const { signIn, googleLogin } = useContext(AuthContext);
     // const axiosPublic = useAxiosPublic();
 
 
-    // const location = useLocation();
+    const location = useLocation();
     console.log(location);
-    // const navigate = useNavigate();
-    // const from = location.state?.from?.pathname || "/";
+    const navigate = useNavigate();
+    const from = location.state?.from?.pathname || "/";
 
 
-    // const handleLogIn = e => {
-    //     e.preventDefault();
-    //     const email = e.target.email.value;
-    //     const password = e.target.password.value;
-    //     console.log(email, password);
-    //     signIn(email, password)
-    //         .then(result => {
-    //             console.log(result.user);
-    //             Swal.fire({
-    //                 icon: "success",
-    //                 text: "LogIn successfully!",
+    const handleLogIn = e => {
+        e.preventDefault();
+        const email = e.target.email.value;
+        const password = e.target.password.value;
+        console.log(email, password);
+        signIn(email, password)
+            .then(result => {
+                console.log(result.user);
+                Swal.fire({
+                    icon: "success",
+                    text: "LogIn successfully!",
 
-    //             });
+                });
 
-    //             navigate(from, { replace: true });
-    //         })
-    //         .catch(error => {
-    //             console.log(error);
-    //             Swal.fire({
-    //                 icon: "error",
-    //                 text: "Please Provide Correct Email And Password!",
+                navigate(from, { replace: true });
+            })
+            .catch(error => {
+                console.log(error);
+                Swal.fire({
+                    icon: "error",
+                    text: "Please Provide Correct Email And Password!",
 
-    //             });
+                });
 
-    //         })
-    // }
-    
+            })
+    }
+
     //--------- Google Login-----------
-    // const handleGoogleLogin = e => {
-    //     e.preventDefault();
-    //     googleLogin()
-    //         .then(result => {
-    //             console.log(result.user)
-    //             const userInfo = {
-    //                 email: result.user?.email,
-    //                 name: result.user?.displayName,
-    //                 role
-                    
-    //             }
-    //             axiosPublic.post('/users', userInfo)
-    //                 .then(res => {
-    //                     console.log(res.data);
-    //                 })
-    //             Swal.fire({
-    //                 icon: "success",
-    //                 text: "LogIn successfully!",
+    const handleGoogleLogin = e => {
+        e.preventDefault();
+        googleLogin()
+        .then(result =>{
+            console.log(result.user)
+            Swal.fire({
+                icon: "success",
+                text: "LogIn successfully!",
+                
+              });
+            navigate(location?.state ? location.state : '/');
+        })
+        .catch(error =>{
+            console.log(error.message);
+            alert(error.message)
+        })
+        
 
-    //             });
-    //             navigate(from, { replace: true });
-    //         })
-    //         .catch(error => {
-    //             console.log(error.message);
-    //             alert(error.message)
-    //         })
-
-
-    // }
+    }
     return (
         <div className="pt-10">
             <div className=" lg:w-[500px] sm:w-[350px] lg:h-[600px] sm:h-[500px] bg-lime-100  lg:ml-[500px]  mb-10 rounded-xl sm:ml-[0px]">
-                {/* <Helmet>
-                    <title>HealthHaven | Login</title>
-                </Helmet> */}
+                <Helmet>
+                    <title>OurStore | Login</title>
+                </Helmet>
 
                 <div className=" pt-12">
                     <h2 className="text-center text-2xl font-bold text-pink-400 mb-2">WELCOME TO HEALTH HAVEN</h2>
                     <p className="text-center text-xl font-semibold text-black">Login To Your Account By Entering<br /> Your Email and Password</p>
                 </div>
-                <form className="pt-10 lg:pl-12 sm:pl-0">
+                <form onSubmit={handleLogIn} className="pt-10 lg:pl-12 sm:pl-0">
                     <div className=" lg:w-[400px] sm:w-[250px] h-[50px]">
                         <input className="w-full h-full rounded-lg text-center" type="email" placeholder="Your Email" required name="email" />
                     </div>
@@ -113,7 +102,7 @@ const Login = () => {
 
                     <div className="flex  ml-[240px]   mt-6">
                         <div  >
-                            {/* <button  className=" mr-8    text-center pt-1 "><FcGoogle className="w-10 h-10"></FcGoogle></button> */}
+                            <button onClick={handleGoogleLogin} className=" mr-8    text-center pt-1 "><FcGoogle className="w-14 h-14"></FcGoogle></button>
                         </div>
 
                     </div>

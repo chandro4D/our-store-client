@@ -1,69 +1,35 @@
-// import { useContext } from "react";
-// import { FaCartPlus } from "react-icons/fa";
-import { Link } from "react-router-dom";
-// import { AuthContext } from "../../../Provider/AuthProvider";
-// import Swal from "sweetalert2";
-// import { CiLogout } from "react-icons/ci";
-// import useCart from "../../../Hook/useCart";
 
+import { useContext } from "react";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../../Provider/AuthProvider";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
-    // const [cart] = useCart(); 
-    // const { user, logOut } = useContext(AuthContext);
+    const { user, logOut } = useContext(AuthContext);
 
 
-    // const handleSignOut = () => {
-    //     // logOut()
-    //         .then(result => {
+    const handleSignOut = () => {
+        logOut()
+            .then(result => {
 
-    //             Swal.fire({
-    //                 icon: "success",
-    //                 text: "LogOut successfully!",
+                Swal.fire({
+                    icon: "success",
+                    text: "LogOut successfully!",
 
-    //             });
-    //             console.log(result.user);
-    //         })
-    //         .catch()
-    // }
+                });
+                console.log(result.user);
+            })
+            .catch()
+    }
 
     const Links = <>
         <li className="text-xl mt-3  "><Link to="/">Home</Link></li>
 
-        <li className="text-xl mt-3"><Link to="/login">LogIn</Link></li>
+        
+        {
+            user? <><button onClick={handleSignOut} className="text-xl mt-3"><Link to="/register">LogOut</Link></button></> : <><li className="text-xl mt-3"><Link to="/login">LogIn</Link></li></>
+        }
         <Link to="/register"><li ><a className="btn btn-secondary mt-3 text-xl text-white ">Join Us</a></li></Link>
-
-
-        {/* <li className="text-xl align-top mt-[6px]"><Link to="cart">
-            <button className="btn">
-                <FaCartPlus></FaCartPlus> 
-                
-               <div className="badge badge-secondary">+{cart.length}</div>
-            </button>
-        </Link></li> */}
-
-
-        {/* {
-            user ?
-                <>
-                    <div className=" tooltip tooltip-bottom mr-5" data-tip={user.displayName || user.email}  >
-                        <div className="dropdown dropdown-bottom">
-                            <div tabIndex={0}  className=" m-1"><img className="rounded-full mt-2 w-14" src={user.photoURL || "https://web.programming-hero.com/static/media/profileImage.934e5b10.png"} /></div>
-                            <ul tabIndex={0} className="dropdown-content text-black z-[1] menu p-6 shadow bg-gradient-to-r from-cyan-500 to-blue-500 rounded-box w-72">
-                                <Link to="/updateProfile"><li className="font-semibold"><a>Update Profile</a></li></Link>
-                                <Link to='dashboard/cart'><li className="font-semibold"><a>Dashboard</a></li></Link>
-                                <li><a><button onClick={handleSignOut} className="btn bg-white w-[120px] font-bold  text-red-600 text-base  ">Logout<CiLogout className="text-2xl" /></button></a></li>
-                            </ul>
-                        </div>
-                    </div>
-
-
-                </>
-                :
-                <>
-                    
-                </>
-
-        } */}
 
     </>
     return (
