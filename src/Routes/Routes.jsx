@@ -8,6 +8,7 @@ import Login from "../Pages/Login/Login";
 import Register from "../Pages/Register/Register";
 import ProductCard from "../ProductCard/ProductCard";
 
+
   export const router = createBrowserRouter([
     {
       path: "/",

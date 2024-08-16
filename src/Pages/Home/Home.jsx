@@ -1,8 +1,8 @@
 import { Helmet } from "react-helmet-async";
 import ProductCard from "../../ProductCard/ProductCard";
 import { useContext, useEffect, useState } from "react";
-import axios from 'axios';
 import { AuthContext } from '../../Provider/AuthProvider';
+import axios from "axios";
 
 const Home = () => {
     const { user } = useContext(AuthContext)
@@ -23,8 +23,8 @@ const Home = () => {
             <Helmet>
                 <title>OurStore | Home</title>
             </Helmet>
-            <h1 className="text-center text-3xl text-yellow-600">This is home</h1>
-            <div>
+            <h1 className="text-center text-3xl text-yellow-600 h-20"> </h1>
+            <div className="grid grid-cols-3 ml-28 mr-28 ">
                 {
                     products.map(products => <ProductCard
                         key={products._id}
