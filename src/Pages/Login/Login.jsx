@@ -72,7 +72,7 @@ const Login = () => {
                 </Helmet>
 
                 <div className=" pt-12">
-                    <h2 className="text-center text-2xl font-bold text-pink-400 mb-2">WELCOME TO HEALTH HAVEN</h2>
+                    <h2 className="text-center text-2xl font-bold text-pink-400 mb-2">WELCOME TO OUR STORE</h2>
                     <p className="text-center text-xl font-semibold text-black">Login To Your Account By Entering<br /> Your Email and Password</p>
                 </div>
                 <form onSubmit={handleLogIn} className="pt-10 lg:pl-12 sm:pl-0">

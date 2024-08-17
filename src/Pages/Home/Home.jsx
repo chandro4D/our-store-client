@@ -22,7 +22,7 @@ const Home = () => {
 
     const brands = ["Sony", "Infinix", "Xiaomi", "Oppo", "Huawei", "Karbonn", "Poco", "Asus", "Vivo", "Motorola", "Tecno", "Samsung", "itel", "Micromax", "Realme", "Nokia", "Google", "OnePlus", "Lava"];
     const categories = ["Smartphone", "Button Phone"];
-    const priceRanges = ["1-500", "500-1000", "1000-"];
+    const priceRanges = ["1-500", "500-1000", "1000-all"];
 
     useEffect(() => {
         const getData = async () => {
@@ -107,9 +107,9 @@ const Home = () => {
                 </select>
                 <button
                     onClick={() => setCurrentPage(1)}
-                    className="bg-blue-500 text-white p-2 rounded"
+                    className=" text-white p-2 rounded"
                 >
-                    Filter
+                    
                 </button>
             </div>
             <div className="flex justify-center mb-4">
@@ -117,19 +117,19 @@ const Home = () => {
                     onClick={() => handleSortChange('Price', 'asc')}
                     className="bg-gray-300 p-2 rounded mr-2"
                 >
-                    Sort by Price: Low to High
+                    Price: Low to High
                 </button>
                 <button
                     onClick={() => handleSortChange('Price', 'desc')}
                     className="bg-gray-300 p-2 rounded mr-2"
                 >
-                    Sort by Price: High to Low
+                    Price: High to Low
                 </button>
                 <button
                     onClick={() => handleSortChange('ProductCreationDate', 'desc')}
                     className="bg-gray-300 p-2 rounded mr-2"
                 >
-                    Sort by Date: Newest First
+                     Newest First
                 </button>
             </div>
             <div className="grid grid-cols-3 ml-28 mr-28">
