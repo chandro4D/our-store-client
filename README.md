@@ -9,8 +9,8 @@
 
                                          *** Some Important Link***
                                     ------------------------------------
-                             Live Link : https://assignment-ten-client-f79aa.web.app
-
+                               Live Link : https://our-store-b86ae.web.app
+                               
                         Server Link :  https://github.com/chandro4D/our-store-server.git 
         
                         client Link :  https://github.com/chandro4D/our-store-client.git
